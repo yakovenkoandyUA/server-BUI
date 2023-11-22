@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
-export const UsersSchema = new Schema({
+ const UsersSchema = new Schema({
 	fullName: {
 		type: String,
 		required: true,
@@ -20,4 +20,5 @@ export const UsersSchema = new Schema({
 })
 
 
-export const UsersModel = mongoose.model('User', UsersSchema)
+
+export default mongoose.model('User', UsersSchema)

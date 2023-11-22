@@ -2,7 +2,7 @@ import express, { json, urlencoded } from 'express'
 import mongoose from 'mongoose'
 import config from './config.js'
 import MoviesRouter from './routes/movie.route.js'
-import { authRoutes } from './routes/movie.route.js'
+import authRoutes from './routes/auth.route.js'
 
 const app = express()
 
@@ -19,6 +19,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/movies', MoviesRouter)
 
 
+mongoose.set('strictQuery', false);
 mongoose
 	.connect(config.MONGO_URL || '', {
 		useNewUrlParser: true,

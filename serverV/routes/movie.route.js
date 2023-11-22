@@ -3,12 +3,12 @@ import MovieController from '../controller/movie.controller.js'
 
 const MoviesRouter = express.Router()
 
-MovieRouter.get('/homepage', MovieController.getHomepage)
-MovieRouter.get('/', MovieController.getMovie)
-MovieRouter.post('/', MovieController.addMovie)
-MovieRouter.get('/:id', MovieController.deleteMovie)
-MovieRouter.get('/trending', MovieController.getMovieTrending)
-MovieRouter.get('/continue', MovieController.getMovieContinue)
+MoviesRouter.get('/homepage', MovieController.getHomepage)
+MoviesRouter.get('/', MovieController.getMovie)
+MoviesRouter.post('/', MovieController.addMovie)
+MoviesRouter.get('/:id', MovieController.deleteMovie)
+MoviesRouter.get('/trending', MovieController.getMovieTrending)
+MoviesRouter.get('/continue', MovieController.getMovieContinue)
 // MovieRouter.delete('/twits/:id', MovieController.removeTwits)
 
 
