@@ -9,7 +9,7 @@ MoviesRouter.post('/', MovieController.addMovie)
 MoviesRouter.get('/:id', MovieController.deleteMovie)
 MoviesRouter.get('/trending', MovieController.getMovieTrending)
 MoviesRouter.get('/continue', MovieController.getMovieContinue)
-// MovieRouter.delete('/twits/:id', MovieController.removeTwits)
+// MovieRouter.delet]e('/twits/:id', MovieController.removeTwits)
 
 
 export default MoviesRouter

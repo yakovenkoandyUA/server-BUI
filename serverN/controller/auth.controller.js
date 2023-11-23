@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt'
-import { verify } from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
+import pkg from 'jsonwebtoken'
+const { verify } = pkg
 
-import UsersModel from '../models/statements.model.js'
-import { getToken } from '@/utils'
+import UsersModel from '../models/user.model.js'
 
 const login = async (req, res) => {
+
 	if (!req.body || !req.body.email || !req.body.password) {
 		res.status(403)
 		res.send({ message: 'invalid data' })
@@ -15,13 +15,14 @@ const login = async (req, res) => {
 	const userFromDB = await UsersModel.findOne({
 		email: req.body.email,
 	})
+	
 
 	if (!userFromDB || !userFromDB.password || !userFromDB.email) {
 		res.status(404)
 		res.send({ message: 'no such user' })
 		return
 	}
-
+	
 	const isValidPassword = await bcrypt.compare(req.body.password, userFromDB.password)
 
 	if (!isValidPassword) {
@@ -37,7 +38,6 @@ const login = async (req, res) => {
 	}
 
 	res.send({
-		token: getToken(userDTO),
 		data: userDTO,
 	})
 }
@@ -78,34 +78,29 @@ const verifyToken = async (req, res) => {
 	}
 }
 const userRegister = async (req, res) => {
-	if (error) return res.status(400).send({ statusText: error.details[0].message })
 
 	//Checking if the user in database
-	const emailExist = await User.findOne({ email: req.body.email })
+	const emailExist = await UsersModel.findOne({ email: req.body.email })
+
 	if (emailExist) return res.status(400).send({ statusText: 'Такой email уже существует' })
 
-	const usernameExist = await User.findOne({ username: req.body.fullName })
+	const usernameExist = await UsersModel.findOne({ username: req.body.fullName })
 	if (usernameExist) return res.status(400).send({ statusText: 'Такой ник уже существует' })
-
+	
 	const salt = await bcrypt.genSalt(10)
 	const hashPassword = await bcrypt.hash(req.body.password, salt)
-
-
 	//Create new user
-	const user = new User({
-		_id: 123,
+	const user = new UsersModel({
 		email: req.body.email,
 		fullName: req.body.fullName,
 		password: hashPassword,
 	})
-
 	try {
 		await user.save()
-		console.log('asdasdasd')
-		await sendEmail(msgOptions)
-		res.send({ statusText: 'Thanks for registering. Please check your email !!' })
+		// await sendEmail(msgOptions)
+		res.send({ statusText: 'Thanks for registering.' })
 	} catch (err) {
-		res.status(400).send({ statusText: 'Something went wrong. Please contact us speachthedictionary@gmail.com' })
+		res.status(400).send({ statusText: 'Something went wrong. Please contact us' })
 		return err
 	}
 }
