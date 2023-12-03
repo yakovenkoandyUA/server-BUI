@@ -34,9 +34,10 @@ const deleteMovie = (request, response) => {
 }
 
 const getMovieTrending = async (request, response) => {
-	const listTrending = await MovieModel.find({ trending: true })
-	if (listTrending) {
-		response.send(listTrending)
+	const listTrending = await MovieModel.find()
+	const filterTrending = listTrending.filter(i => i.trending)
+	if (filterTrending) {
+		response.send(filterTrending)
 	} else {
 		response.status(404)
 		response.send({ message: 'movies is not created' })
@@ -44,9 +45,10 @@ const getMovieTrending = async (request, response) => {
 }
 
 const getMovieContinue = (request, response) => {
-	const listContinue = MovieModel.find({ continue: true })
-	if (listContinue) {
-		response.send(listContinue)
+	const listContinue = MovieModel.find()
+	const filterContinue = listContinue.filter(i => i.continue)
+	if (filterContinue) {
+		response.send(filterContinue)
 	} else {
 		response.status(404)
 		response.send({ message: 'movies is not created' })

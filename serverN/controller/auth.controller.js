@@ -5,7 +5,6 @@ const { verify } = pkg
 import UsersModel from '../models/user.model.js'
 
 const login = async (req, res) => {
-
 	if (!req.body || !req.body.email || !req.body.password) {
 		res.status(403)
 		res.send({ message: 'invalid data' })
@@ -15,14 +14,13 @@ const login = async (req, res) => {
 	const userFromDB = await UsersModel.findOne({
 		email: req.body.email,
 	})
-	
 
 	if (!userFromDB || !userFromDB.password || !userFromDB.email) {
 		res.status(404)
 		res.send({ message: 'no such user' })
 		return
 	}
-	
+
 	const isValidPassword = await bcrypt.compare(req.body.password, userFromDB.password)
 
 	if (!isValidPassword) {
@@ -78,15 +76,14 @@ const verifyToken = async (req, res) => {
 	}
 }
 const userRegister = async (req, res) => {
-
 	//Checking if the user in database
 	const emailExist = await UsersModel.findOne({ email: req.body.email })
 
-	if (emailExist) return res.status(400).send({ statusText: 'Такой email уже существует' })
+	if (emailExist) return res.status(400).send({ statusText: 'Такий email вже існує' })
 
 	const usernameExist = await UsersModel.findOne({ username: req.body.fullName })
-	if (usernameExist) return res.status(400).send({ statusText: 'Такой ник уже существует' })
-	
+	if (usernameExist) return res.status(400).send({ statusText: 'Такий нікнейм вже існує' })
+
 	const salt = await bcrypt.genSalt(10)
 	const hashPassword = await bcrypt.hash(req.body.password, salt)
 	//Create new user
@@ -98,7 +95,7 @@ const userRegister = async (req, res) => {
 	try {
 		await user.save()
 		// await sendEmail(msgOptions)
-		res.send({ statusText: 'Thanks for registering.' })
+		res.send({ statusText: 'Thanks for registering.', email: user.email, fullName: user.fullName })
 	} catch (err) {
 		res.status(400).send({ statusText: 'Something went wrong. Please contact us' })
 		return err

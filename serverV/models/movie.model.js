@@ -22,6 +22,22 @@ const MovieSchema = new Schema({
 		type: Boolean,
 		required: true,
 	},
+	rating: {
+		type: Number,
+		required: true
+	},
+	category: {
+		type: String,
+		required: true
+	},
+	viewHours: {
+		type: String,
+		required: true
+	},
+	dateCreate: {
+		type: String,
+		required: true
+	},
 })
 
-export default mongoose.model('Twits', MovieSchema)
+export default mongoose.model('Movies', MovieSchema)

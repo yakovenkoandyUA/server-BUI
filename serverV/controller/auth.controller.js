@@ -98,7 +98,7 @@ const userRegister = async (req, res) => {
 	try {
 		await user.save()
 		// await sendEmail(msgOptions)
-		res.send({ statusText: 'Thanks for registering.' })
+		res.send({ statusText: 'Thanks for registering.', email: user.email, fullName: user.fullName })
 	} catch (err) {
 		res.status(400).send({ statusText: 'Something went wrong. Please contact us' })
 		return err
