@@ -34,10 +34,11 @@ const deleteMovie = (request, response) => {
 }
 
 const getMovieTrending = async (request, response) => {
-	const listTrending = await MovieModel.find()
-	const filterTrending = listTrending.filter(i => i.trending)
-	if (filterTrending) {
-		response.send(filterTrending)
+	const key = 'trending'
+	const listTrending = await MovieModel.find({ [key]: true })
+	// const filterTrending = listTrending.filter(i => i.trending)
+	if (listTrending) {
+		response.send(listTrending)
 	} else {
 		response.status(404)
 		response.send({ message: 'movies is not created' })
@@ -45,13 +46,26 @@ const getMovieTrending = async (request, response) => {
 }
 
 const getMovieContinue = (request, response) => {
-	const listContinue = MovieModel.find()
-	const filterContinue = listContinue.filter(i => i.continue)
-	if (filterContinue) {
-		response.send(filterContinue)
+	const key = 'continue'
+	const listContinue = MovieModel.find({ [key]: true })
+	// const filterContinue = listContinue.filter(i => i.continue)
+	if (listContinue) {
+		response.send(listContinue)
 	} else {
 		response.status(404)
 		response.send({ message: 'movies is not created' })
+	}
+}
+
+const likeMovie = async (req, res) => {
+	const itemId = req.params.id
+	const updatedData = req.body
+	
+	try {
+		const updatedItem = await MovieModel.findByIdAndUpdate(itemId, updatedData)
+		res.json({ message: 'Item updated successfully'})
+	} catch (error) {
+		res.status(500).json({ message: 'Error updating item in MongoDB' })
 	}
 }
 
@@ -62,6 +76,7 @@ const MovieController = {
 	deleteMovie,
 	getMovieTrending,
 	getMovieContinue,
+	likeMovie,
 }
 
 export default MovieController

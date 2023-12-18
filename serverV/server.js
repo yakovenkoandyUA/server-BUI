@@ -2,6 +2,7 @@ import express, { json, urlencoded } from 'express'
 import mongoose from 'mongoose'
 import config from './config.js'
 import MoviesRouter from './routes/movie.route.js'
+import WishlistRouter from './routes/wishlist.route.js'
 import authRoutes from './routes/auth.route.js'
 
 const app = express()
@@ -17,6 +18,7 @@ app.use(urlencoded({ extended: false }))
 /* PORT */
 app.use('/api/auth', authRoutes)
 app.use('/api/movies', MoviesRouter)
+app.use('/api/wishlist', WishlistRouter)
 
 
 mongoose.set('strictQuery', false);
