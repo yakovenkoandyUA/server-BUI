@@ -1,4 +1,4 @@
-import express  from "express";
+import express from 'express'
 import MovieController from '../controller/movie.controller.js'
 
 const MoviesRouter = express.Router()
@@ -12,8 +12,4 @@ MoviesRouter.get('/trending', MovieController.getMovieTrending)
 MoviesRouter.get('/continue', MovieController.getMovieContinue)
 // MovieRouter.delet]e('/twits/:id', MovieController.removeTwits)
 
-
 export default MoviesRouter
-
-
-
